@@ -5,7 +5,7 @@
 - n/a
 
 ### Controls
-- n/a
+- WASD & arrow keys to move
 
 ### Note
 This was made for fun, not necessarily maintainability or long term reliability.
