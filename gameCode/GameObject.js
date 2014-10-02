@@ -8,9 +8,9 @@ function GameObject()
 GameObject.prototype.update=function(time)
 {
 	
-}
+};
 
 GameObject.prototype.toString=function()
 {
 	return '[GameObject "'+this.name+'"]';
-}
+};

@@ -21,7 +21,7 @@ var inputTypes = {
 	Left: 4,
 	Enter: 5,
 	Esc: 6
-}
+};
 
 function gameBootstrap()
 {	
@@ -60,19 +60,19 @@ function keyDown(event)
 {
 	//console.log("keyDown");
 	if(event.keyCode==87 || event.keyCode==38)//w and up
-		processInput(inputTypes.Up);
+		processInputCommand(inputTypes.Up);
 	else if(event.keyCode==83 || event.keyCode==40)//s and down
-		processInput(inputTypes.Down);
+		processInputCommand(inputTypes.Down);
 	else if(event.keyCode==68 || event.keyCode==39)//up and w
-		processInput(inputTypes.Right);
+		processInputCommand(inputTypes.Right);
 	else if(event.keyCode==65 || event.keyCode==37)//up and w
-		processInput(inputTypes.Left);
+		processInputCommand(inputTypes.Left);
 }
 function keyUp(event)
 {
 	//console.log("keyUp");
 }
-function processInput(input)
+function processInputCommand(input)
 {
 	var speed = 5;
 	switch(input)
@@ -99,14 +99,14 @@ function gameStart()
 	player.Y = 500;
 	
 	tick();
-	rootTimer = setInterval(function(){tick()}, tickDelay);
+	rootTimer = setInterval(function(){tick();}, tickDelay);
 }
 function gameStop()
 {
     clearInterval(myVar);
 }
 
-function demo(context)
+function renderDemo(context)
 {
 	if(demoRight)
 		demoX++;
@@ -138,12 +138,9 @@ function demo(context)
 	context.fillStyle = grd;
 	//ctx.fillRect(0,0,gameWidth,gameHeight);
 	
-	var d = new Date();
 	context.font = '40pt Calibri';
 	context.fillStyle = 'black';
-	context.fillText("Date:"+d.toUTCString()+" - "+d.getMilliseconds(),10,90);
-	context.fillText("Mouse X:"+mousePos.X+" Y:"+mousePos.Y,10,190);
-	context.fillText("Gradient X:"+demoX,10,290);
+	context.fillText("Gradient X:"+demoX,10,90);
 }
 
 function tick()
@@ -157,13 +154,27 @@ function update()
 	
 }
 
+function drawFPS(context)
+{
+	var xPos = 5;
+	var yPos = 25;
+	var ySeperation = 25;
+	var d = new Date();
+	context.font = '20pt Calibri';
+	context.fillStyle = 'black';
+	
+	context.fillText("Date:"+d.toUTCString()+" - "+d.getMilliseconds(),xPos,yPos+ySeperation*0);
+	context.fillText("Mouse X:"+mousePos.X+" Y:"+mousePos.Y,           xPos,yPos+ySeperation*1);
+}
+
 function draw()
 {
 	var context = canvas.getContext("2d");
 	
 	context.clearRect (0,0,gameWidth,gameHeight);
-	
-	demo(context);
+
+	//renderDemo(context);
+	drawFPS(context);
 	
 	//render game
 	player.draw(context);
