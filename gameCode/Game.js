@@ -1,3 +1,5 @@
+var canvasID = "myCanvas";
+var canvas;
 var rootTimer;
 var mousePos = new Point(0,0);
 var tickDelay = 5;
@@ -7,20 +9,95 @@ var gameHeight;
 var demoX = 1;
 var demoRight = true;
 
-function gameInit()
+var playerImg;
+
+var player;
+
+var inputTypes = {
+	None: 0,
+	Up: 1,
+	Right: 2,
+	Down: 3,
+	Left: 4,
+	Enter: 5,
+	Esc: 6
+}
+
+function gameBootstrap()
 {	
-	var canvas = document.getElementById("myCanvas");
+	canvas = document.getElementById(canvasID);
 	gameWidth = canvas.width;
 	gameHeight = canvas.height;
 	
+	loadAssets();
 	
-	canvas.addEventListener('mousemove', function(evt) {
-        mousePos = getMousePos(canvas, evt);}, false);
+	canvas.addEventListener('mousemove', function(evt) {mouseMove(evt);}, false);
+	canvas.addEventListener('mousedown', function(evt) {mouseDown(evt);}, false);
+	canvas.addEventListener('mouseup',   function(evt) {mouseUp(evt);}, false);
+	document.addEventListener('keydown', function(evt) {keyDown(evt);}, false);
+	document.addEventListener('keyup',   function(evt) {keyUp(evt);}, false);
 	
 	gameStart();
 }
+function loadAssets()
+{
+	Player.image = new Image();
+	Player.image.src = 'assets/pics/player/001_attackNN_01.png';
+}
+function mouseMove(event)
+{
+	mousePos = getMousePos(canvas, event);
+}
+function mouseDown(event)
+{
+	//console.log("mouseDown");
+}
+function mouseUp(event)
+{
+	//console.log("mouseUp");
+}
+function keyDown(event)
+{
+	//console.log("keyDown");
+	if(event.keyCode==87 || event.keyCode==38)//w and up
+		processInput(inputTypes.Up);
+	else if(event.keyCode==83 || event.keyCode==40)//s and down
+		processInput(inputTypes.Down);
+	else if(event.keyCode==68 || event.keyCode==39)//up and w
+		processInput(inputTypes.Right);
+	else if(event.keyCode==65 || event.keyCode==37)//up and w
+		processInput(inputTypes.Left);
+}
+function keyUp(event)
+{
+	//console.log("keyUp");
+}
+function processInput(input)
+{
+	var speed = 5;
+	switch(input)
+	{
+		case inputTypes.Up:
+			player.Y-=speed;
+			break;
+		case inputTypes.Down:
+			player.Y+=speed;
+			break;
+		case inputTypes.Left:
+			player.X-=speed;
+			break;
+		case inputTypes.Right:
+			player.X+=speed;
+			break;
+	}
+}
 function gameStart()
 {
+	//setup game for first run
+	player = new Player();
+	player.X = 200;
+	player.Y = 500;
+	
 	tick();
 	rootTimer = setInterval(function(){tick()}, tickDelay);
 }
@@ -29,7 +106,7 @@ function gameStop()
     clearInterval(myVar);
 }
 
-function demo(ctx)
+function demo(context)
 {
 	if(demoRight)
 		demoX++;
@@ -53,29 +130,41 @@ function demo(ctx)
 
 	var gWidth=50;
 	// Create gradient
-	var grd = ctx.createLinearGradient(demoX+gameWidth/2,0,demoX+gWidth/2,demoX);
+	var grd = context.createLinearGradient(demoX+gameWidth/2,0,demoX+gWidth/2,demoX);
 	grd.addColorStop(0,"cyan");
 	grd.addColorStop(1,"red");
 
 	// Fill with gradient
-	ctx.fillStyle = grd;
-	ctx.fillRect(0,0,gameWidth,gameHeight);
-	
+	context.fillStyle = grd;
+	//ctx.fillRect(0,0,gameWidth,gameHeight);
 	
 	var d = new Date();
-	ctx.font = '40pt Calibri';
-	ctx.fillStyle = 'black';
-	ctx.fillText("Date:"+d.toUTCString()+" - "+d.getMilliseconds(),10,90);
-	ctx.fillText("Mouse X:"+mousePos.X+" Y:"+mousePos.Y,10,190);
-	ctx.fillText("Gradient X:"+demoX,10,290);
+	context.font = '40pt Calibri';
+	context.fillStyle = 'black';
+	context.fillText("Date:"+d.toUTCString()+" - "+d.getMilliseconds(),10,90);
+	context.fillText("Mouse X:"+mousePos.X+" Y:"+mousePos.Y,10,190);
+	context.fillText("Gradient X:"+demoX,10,290);
 }
 
 function tick()
 {
-	var canvas = document.getElementById("myCanvas");
-	var ctx = canvas.getContext("2d");
+	update();
+	draw();
+}
+
+function update()
+{
 	
-	ctx.clearRect (0,0,gameWidth,gameHeight);
+}
+
+function draw()
+{
+	var context = canvas.getContext("2d");
 	
-	demo(ctx);
+	context.clearRect (0,0,gameWidth,gameHeight);
+	
+	demo(context);
+	
+	//render game
+	player.draw(context);
 }
