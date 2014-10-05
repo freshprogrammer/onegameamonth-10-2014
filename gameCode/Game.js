@@ -1,18 +1,18 @@
 var canvasID = "myCanvas";
 var canvas;
-var rootTimer;
+var rootTimerObject;
 var mousePos = new Point(0,0);
-var tickDelay = 0;
+var tickDelay = 5;
 var gameWidth;
 var gameHeight;
 
 var keysPressed = [];
 var gameInput = new GameInput();
 
+var player;
+
 var demoX = 1;
 var demoRight = true;
-
-var player;
 
 function gameBootstrap()
 {	
@@ -30,23 +30,28 @@ function gameBootstrap()
 	
 	gameStart();
 }
+
 function loadAssets()
 {
 	Player.image = new Image();
 	Player.image.src = 'assets/pics/player/001_attackNN_01.png';
 }
+
 function mouseMove(event)
 {
 	mousePos = getMousePos(canvas, event);
 }
+
 function mouseDown(event)
 {
 	//console.log("mouseDown");
 }
+
 function mouseUp(event)
 {
 	//console.log("mouseUp");
 }
+
 function keyDown(event)
 {
 	//console.log("keyDown");
@@ -56,6 +61,7 @@ function keyDown(event)
 		keysPressed.push(event.keyCode);
 	}
 }
+
 function keyUp(event)
 {
 	var index = keysPressed.indexOf(event.keyCode);
@@ -65,6 +71,7 @@ function keyUp(event)
 	}
 	//console.log("keyUp");
 }
+
 function processInput()
 {
 	gameInput.clearKeys();
@@ -81,6 +88,7 @@ function processInput()
 	}
 	
 }
+
 function gameStart()
 {
 	//setup game for first run
@@ -89,11 +97,12 @@ function gameStart()
 	player.Y = 500;
 	
 	tick();
-	rootTimer = setInterval(function(){tick();}, tickDelay);
+	rootTimerObject = setInterval(function(){tick();}, tickDelay);
 }
+
 function gameStop()
 {
-    clearInterval(myVar);
+    clearInterval(rootTimerObject);
 }
 
 function renderDemo(context)
