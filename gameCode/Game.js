@@ -2,26 +2,17 @@ var canvasID = "myCanvas";
 var canvas;
 var rootTimer;
 var mousePos = new Point(0,0);
-var tickDelay = 5;
+var tickDelay = 0;
 var gameWidth;
 var gameHeight;
+
+var keysPressed = [];
+var gameInput = new GameInput();
 
 var demoX = 1;
 var demoRight = true;
 
-var playerImg;
-
 var player;
-
-var inputTypes = {
-	None: 0,
-	Up: 1,
-	Right: 2,
-	Down: 3,
-	Left: 4,
-	Enter: 5,
-	Esc: 6
-};
 
 function gameBootstrap()
 {	
@@ -59,37 +50,36 @@ function mouseUp(event)
 function keyDown(event)
 {
 	//console.log("keyDown");
-	if(event.keyCode==87 || event.keyCode==38)//w and up
-		processInputCommand(inputTypes.Up);
-	else if(event.keyCode==83 || event.keyCode==40)//s and down
-		processInputCommand(inputTypes.Down);
-	else if(event.keyCode==68 || event.keyCode==39)//up and w
-		processInputCommand(inputTypes.Right);
-	else if(event.keyCode==65 || event.keyCode==37)//up and w
-		processInputCommand(inputTypes.Left);
+	var index = keysPressed.indexOf(event.keyCode);
+	
+	if (index <= -1) {
+		keysPressed.push(event.keyCode);
+	}
 }
 function keyUp(event)
 {
+	var index = keysPressed.indexOf(event.keyCode);
+	
+	if (index > -1) {
+		keysPressed.splice(index, 1);
+	}
 	//console.log("keyUp");
 }
-function processInputCommand(input)
+function processInput()
 {
-	var speed = 5;
-	switch(input)
-	{
-		case inputTypes.Up:
-			player.move(0,-speed);
-			break;
-		case inputTypes.Down:
-			player.move(0,speed);
-			break;
-		case inputTypes.Left:
-			player.move(-speed,0);
-			break;
-		case inputTypes.Right:
-			player.move(speed,0);
-			break;
+	gameInput.clearKeys();
+	for	(index = 0; index < keysPressed.length; index++) 
+	{   
+		if(keysPressed[index]==87 || keysPressed[index]==38)//w and up
+			gameInput.UpPressed = true;
+		else if(keysPressed[index]==83 || keysPressed[index]==40)//s and down
+			gameInput.DownPressed = true;
+		else if(keysPressed[index]==68 || keysPressed[index]==39)//d and right
+			gameInput.RightPressed = true;
+		else if(keysPressed[index]==65 || keysPressed[index]==37)//a and left
+			gameInput.LeftPressed = true;
 	}
+	
 }
 function gameStart()
 {
@@ -151,7 +141,8 @@ function tick()
 
 function update()
 {
-	
+	processInput();
+	player.update(0);
 }
 
 function drawFPS(context)
@@ -165,6 +156,9 @@ function drawFPS(context)
 	
 	context.fillText("Date:"+d.toUTCString()+" - "+d.getMilliseconds(),xPos,yPos+ySeperation*0);
 	context.fillText("Mouse X:"+mousePos.X+" Y:"+mousePos.Y,           xPos,yPos+ySeperation*1);
+
+	context.fillText("Keys:"+keysPressed,           xPos,yPos+ySeperation*2);
+	context.fillText("Input:"+gameInput,           xPos,yPos+ySeperation*3);
 }
 
 function draw()
