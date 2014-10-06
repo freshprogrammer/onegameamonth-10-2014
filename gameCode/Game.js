@@ -2,7 +2,8 @@ var canvasID = "myCanvas";
 var canvas;
 var rootTimerObject;
 var mousePos = new Point(0,0);
-var tickDelay = 5;
+var tickDelay = 0;
+var lastTickTime = 0;
 var gameWidth;
 var gameHeight;
 
@@ -72,7 +73,7 @@ function keyUp(event)
 	//console.log("keyUp");
 }
 
-function processInput()
+function processInput(time)
 {
 	gameInput.clearKeys();
 	for	(index = 0; index < keysPressed.length; index++) 
@@ -96,6 +97,7 @@ function gameStart()
 	player.X = 200;
 	player.Y = 500;
 	
+	lastTickTime = window.performance.now();
 	tick();
 	rootTimerObject = setInterval(function(){tick();}, tickDelay);
 }
@@ -144,14 +146,18 @@ function renderDemo(context)
 
 function tick()
 {
-	update();
-	draw();
+	var now = window.performance.now();
+	var timeDif = now-lastTickTime;
+	
+	update(timeDif);
+	draw(timeDif);
+	lastTickTime = window.performance.now();
 }
 
-function update()
+function update(time)
 {
-	processInput();
-	player.update(0);
+	processInput(time);
+	player.update(time);
 }
 
 function drawFPS(context)
@@ -170,7 +176,7 @@ function drawFPS(context)
 	context.fillText("Input:"+gameInput,           xPos,yPos+ySeperation*3);
 }
 
-function draw()
+function draw(time)
 {
 	var context = canvas.getContext("2d");
 	

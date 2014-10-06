@@ -7,7 +7,7 @@ function Player()
 	this.facingDir = new Point(0,0);
 	this.Width = 32;
 	this.Height = 32;
-	this.Speed = 2;
+	this.Speed = 400;
 }
 
 Player.prototype.update=function(time)
@@ -23,7 +23,10 @@ Player.prototype.update=function(time)
 		xMove += this.Speed;	
 	if(gameInput.LeftPressed)
 		xMove += -this.Speed;
-	
+
+	xMove *= time/1000;
+	yMove *= time/1000;
+		
 	this.move(xMove,yMove);
 };
 
