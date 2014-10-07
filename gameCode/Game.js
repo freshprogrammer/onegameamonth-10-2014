@@ -78,16 +78,16 @@ function processInputCommand(input)
 	switch(input)
 	{
 		case inputTypes.Up:
-			player.Y-=speed;
+			player.move(0,-speed);
 			break;
 		case inputTypes.Down:
-			player.Y+=speed;
+			player.move(0,speed);
 			break;
 		case inputTypes.Left:
-			player.X-=speed;
+			player.move(-speed,0);
 			break;
 		case inputTypes.Right:
-			player.X+=speed;
+			player.move(speed,0);
 			break;
 	}
 }
