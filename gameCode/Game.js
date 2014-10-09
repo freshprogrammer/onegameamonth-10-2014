@@ -116,13 +116,10 @@ function gameStart()
 	//systems
 	collisionSystem = new CollisionSystem();
 	
-	
 	level = new Level();
 	level.create();
 	
 	//game objects
-	
-	
 	player = new Player();
 	player.X = 200;
 	player.Y = 500;
@@ -192,6 +189,7 @@ function update(time)
 	
 	player.update(time);
 	level.update(time);
+	
 	collisionSystem.update(time);
 }
 
