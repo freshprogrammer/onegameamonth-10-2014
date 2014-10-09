@@ -5,9 +5,7 @@
 - n/a
 
 ### Controls
-##Game Play
 - WASD & arrow keys to move
-##Testing
 - 0 - toggle collision visibility
 
 
