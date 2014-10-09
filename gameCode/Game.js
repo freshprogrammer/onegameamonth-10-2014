@@ -8,10 +8,13 @@ var gameWidth;
 var gameHeight;
 
 var keysPressed = [];
+var oneTimeKeys = [49];
 var gameInput = new GameInput();
 
 var player;
 var level;
+var renderCollisionSystem = true;
+var collisionSystem;
 
 var demoX = 1;
 var demoRight = true;
@@ -94,12 +97,19 @@ function processInput(time)
 function gameStart()
 {
 	//setup game for first run
-	player = new Player();
-	player.X = 200;
-	player.Y = 500;
+	//systems
+	collisionSystem = new CollisionSystem();
+	
 	
 	level = new Level();
 	level.create();
+	
+	//game objects
+	
+	
+	player = new Player();
+	player.X = 200;
+	player.Y = 500;
 	
 	lastTickTime = window.performance.now();
 	tick();
@@ -155,6 +165,8 @@ function tick()
 	
 	update(timeDif);
 	draw(timeDif);
+	collisionSystem.clearFrame();
+	
 	lastTickTime = window.performance.now();
 }
 
@@ -164,6 +176,7 @@ function update(time)
 	
 	player.update(time);
 	level.update(time);
+	collisionSystem.update(time);
 }
 
 function drawFPS(context)
@@ -194,4 +207,7 @@ function draw(time)
 	//render game
 	player.draw(context);
 	level.draw(context);
+	
+	if(renderCollisionSystem)
+		collisionSystem.draw(context);
 }

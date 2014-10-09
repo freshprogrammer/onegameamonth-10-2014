@@ -1,33 +1,32 @@
-Level.prototype = new GameObject();        // Here's where the inheritance occurs 
 Level.prototype.constructor=Level;  
 function Level()
 {
-	
+	this.Rooms=[];
 }
 
 Level.prototype.create=function()
 {
 	var room = new Room(100,200,200,300);
-	this.Children.push(room);
+	this.Rooms.push(room);
 	var room = new Room(300,150,400,500);
-	this.Children.push(room);
+	this.Rooms.push(room);
 };
 
 Level.prototype.update=function(time)
 {
-	for	(index = 0; index < this.Children.length; index++) 
+	for	(index = 0; index < this.Rooms.length; index++) 
 	{
 		//array of rooms in this level
-		this.Children[index].update(time);
+		this.Rooms[index].update(time);
 	}
 };
 
 Level.prototype.draw=function(context)
 {
-	for	(index = 0; index < this.Children.length; index++) 
+	for	(index = 0; index < this.Rooms.length; index++) 
 	{
 		//array of rooms in this level
-		this.Children[index].draw(context);
+		this.Rooms[index].draw(context);
 	}
 };
 

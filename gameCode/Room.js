@@ -6,11 +6,17 @@ function Room(x, y, w, h)
 	this.Y = y;
 	this.Width = w;
 	this.Height = h;
+
+	this.collisionEnabled = true;
 }
 
 Room.prototype.update=function(time)
 {
 	
+	if(this.collisionEnabled)
+	{
+		collisionSystem.add(this);
+	}
 };
 
 Room.prototype.draw=function(context)
