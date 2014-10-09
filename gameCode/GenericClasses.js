@@ -1,8 +1,4 @@
-function Point(x, y) {
-    this.X = x;
-    this.Y = y;
-}
-
+//functions
 function getMousePos(canvas, evt) 
 {
 	var rect = canvas.getBoundingClientRect();
@@ -11,6 +7,17 @@ function getMousePos(canvas, evt)
 	  Y: evt.clientY - rect.top
 	};
 }
+//classes
+//Point
+function Point(x, y) {
+    this.X = x;
+    this.Y = y;
+}
+Point.prototype.toString=function()
+{
+	return '[Point('+this.X+','+this.Y+')]';
+};
+//GameInput
 function GameInput()
 {
 	this.reset();

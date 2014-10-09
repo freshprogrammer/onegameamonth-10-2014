@@ -4,7 +4,9 @@ function GameObject()
 	this.Y = 0;
 	this.Width = 0;
 	this.Height = 0;
-	this.children=[];
+	this.VectorX = 0;
+	this.VectorY = 0;
+	this.Children=[];
 }
 
 GameObject.prototype.update=function(time)
@@ -14,5 +16,5 @@ GameObject.prototype.update=function(time)
 
 GameObject.prototype.toString=function()
 {
-	return '[GameObject "'+this.name+'"]';
+	return '[GameObject at ('+this.X+','+this.Y+')]';
 };

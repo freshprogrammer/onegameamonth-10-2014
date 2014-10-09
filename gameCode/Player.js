@@ -16,11 +16,11 @@ Player.prototype.update=function(time)
 	var yMove = 0;
 
 	if(gameInput.DownPressed)
-		yMove += this.Speed;	
+		yMove += this.Speed;
 	if(gameInput.UpPressed)
 		yMove += -this.Speed;
 	if(gameInput.RightPressed)
-		xMove += this.Speed;	
+		xMove += this.Speed;
 	if(gameInput.LeftPressed)
 		xMove += -this.Speed;
 
@@ -55,5 +55,5 @@ Player.prototype.draw=function(context)
 
 Player.prototype.toString=function()
 {
-	return '[GameObject "'+this.name+'"]';
+	return '[Player ('+this.X+','+this.Y+')]';
 };
