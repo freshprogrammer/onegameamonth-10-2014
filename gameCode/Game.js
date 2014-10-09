@@ -2,7 +2,7 @@ var canvasID = "myCanvas";
 var canvas;
 var rootTimerObject;
 var mousePos = new Point(0,0);
-var tickDelay = 0;
+var tickDelay = 4;
 var lastTickTime = 0;
 var gameWidth;
 var gameHeight;
