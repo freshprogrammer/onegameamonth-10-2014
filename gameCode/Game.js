@@ -11,6 +11,7 @@ var keysPressed = [];
 var gameInput = new GameInput();
 
 var player;
+var level;
 
 var demoX = 1;
 var demoRight = true;
@@ -97,6 +98,9 @@ function gameStart()
 	player.X = 200;
 	player.Y = 500;
 	
+	level = new Level();
+	level.create();
+	
 	lastTickTime = window.performance.now();
 	tick();
 	rootTimerObject = setInterval(function(){tick();}, tickDelay);
@@ -157,7 +161,9 @@ function tick()
 function update(time)
 {
 	processInput(time);
+	
 	player.update(time);
+	level.update(time);
 }
 
 function drawFPS(context)
@@ -187,4 +193,5 @@ function draw(time)
 	
 	//render game
 	player.draw(context);
+	level.draw(context);
 }
