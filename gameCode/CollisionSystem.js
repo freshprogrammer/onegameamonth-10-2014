@@ -11,7 +11,7 @@ CollisionSystem.prototype.clearFrame=function()
 
 CollisionSystem.prototype.update=function(time)
 {
-	console.log(this.FrameCollisionObjects.length+" collision Objects");
+	//console.log(this.FrameCollisionObjects.length+" collision Objects");
 	for	(index = 0; index < this.FrameCollisionObjects.length; index++) 
 	{
 		//test collision

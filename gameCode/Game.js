@@ -8,12 +8,13 @@ var gameWidth;
 var gameHeight;
 
 var keysPressed = [];
-var oneTimeKeys = [49];
+var oneTimeKeys = [48];
+var oneTimeKeysActive = [];
 var gameInput = new GameInput();
 
 var player;
 var level;
-var renderCollisionSystem = true;
+var collisionSystemRendered = false;
 var collisionSystem;
 
 var demoX = 1;
@@ -61,8 +62,8 @@ function keyDown(event)
 {
 	//console.log("keyDown");
 	var index = keysPressed.indexOf(event.keyCode);
-	
-	if (index <= -1) {
+	if (index <= -1) 
+	{
 		keysPressed.push(event.keyCode);
 	}
 }
@@ -70,9 +71,15 @@ function keyDown(event)
 function keyUp(event)
 {
 	var index = keysPressed.indexOf(event.keyCode);
-	
-	if (index > -1) {
+	if (index > -1) 
+	{
 		keysPressed.splice(index, 1);
+	}
+	
+	index = oneTimeKeysActive.indexOf(event.keyCode);
+	if (index > -1) 
+	{
+		oneTimeKeysActive.splice(index, 1);
 	}
 	//console.log("keyUp");
 }
@@ -82,7 +89,16 @@ function processInput(time)
 	gameInput.clearKeys();
 	for	(index = 0; index < keysPressed.length; index++) 
 	{   
-		if(keysPressed[index]==87 || keysPressed[index]==38)//w and up
+		if(48==keysPressed[index])
+		{//0 key - toggle collision visibility
+			var index2 =oneTimeKeysActive.indexOf(keysPressed[index]);
+			if (index2 <=-1) 
+			{
+				collisionSystemRendered = !collisionSystemRendered;
+				oneTimeKeysActive.push(keysPressed[index]);
+			}
+		}
+		else if(keysPressed[index]==87 || keysPressed[index]==38)//w and up
 			gameInput.UpPressed = true;
 		else if(keysPressed[index]==83 || keysPressed[index]==40)//s and down
 			gameInput.DownPressed = true;
@@ -208,6 +224,6 @@ function draw(time)
 	player.draw(context);
 	level.draw(context);
 	
-	if(renderCollisionSystem)
+	if(collisionSystemRendered)
 		collisionSystem.draw(context);
 }
