@@ -6,6 +6,7 @@ function GameObject()
 	this.Height = 0;
 	this.VectorX = 0;
 	this.VectorY = 0;
+	this.FixedLocation = true;
 }
 
 GameObject.prototype.update=function(time)

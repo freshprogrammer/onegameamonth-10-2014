@@ -8,6 +8,7 @@ function Player()
 	this.Width = 32;
 	this.Height = 32;
 	this.Speed = 400;
+	this.FixedLocation = false;
 	
 	this.collisionEnabled = true;
 }
