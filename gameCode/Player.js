@@ -8,6 +8,8 @@ function Player()
 	this.Width = 32;
 	this.Height = 32;
 	this.Speed = 400;
+	
+	this.collisionEnabled = true;
 }
 
 Player.prototype.update=function(time)
@@ -28,6 +30,9 @@ Player.prototype.update=function(time)
 	yMove *= time/1000;
 		
 	this.move(xMove,yMove);
+	
+	if(this.collisionEnabled)
+		collisionSystem.add(this);
 };
 
 Player.prototype.move=function(dx, dy)

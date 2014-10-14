@@ -6,6 +6,9 @@
 
 ### Controls
 - WASD & arrow keys to move
+- 0 - toggle collision visibility
+
+
 
 ### Note
 This was made for fun, not necessarily maintainability or long term reliability.

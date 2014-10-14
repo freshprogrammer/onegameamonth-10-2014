@@ -6,12 +6,16 @@ function GameObject()
 	this.Height = 0;
 	this.VectorX = 0;
 	this.VectorY = 0;
-	this.Children=[];
 }
 
 GameObject.prototype.update=function(time)
 {
 	
+};
+
+GameObject.prototype.createCollisionObject=function()
+{
+	return new CollisionRectangle(this.X,this.Y,this.Width,this.Height,this);
 };
 
 GameObject.prototype.toString=function()
