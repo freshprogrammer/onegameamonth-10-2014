@@ -31,8 +31,10 @@ Player.prototype.update=function(time)
 		
 	this.move(xMove,yMove);
 	
+	var collisionpadding = -2;
 	if(this.collisionEnabled)
-		collisionSystem.add(this);
+		//collisionSystem.add(this);
+		collisionSystem.add(this.createCollisionObjectWithPadding(collisionpadding));
 };
 
 Player.prototype.move=function(dx, dy)
