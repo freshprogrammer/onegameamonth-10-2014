@@ -7,6 +7,11 @@ var lastTickTime = 0;
 var gameWidth;
 var gameHeight;
 
+var fpsInterval = 2000;
+var framesThisInterval = 0;
+var lastIntervalFPS = -1;
+var lastIntervalEndTime = 0;
+
 var keysPressed = [];
 var oneTimeKeys = [48];
 var oneTimeKeysActive = [];
@@ -176,6 +181,16 @@ function tick()
 	var now = window.performance.now();
 	var timeDif = now-lastTickTime;
 	
+	framesThisInterval++;
+	if(now-lastIntervalEndTime > fpsInterval)
+	{
+		//new fps interval
+		lastIntervalFPS = framesThisInterval /(fpsInterval/1000);
+		framesThisInterval = 0;
+		lastIntervalEndTime = now;
+	}
+	lastIntervalEndTime
+	
 	update(timeDif);
 	draw(timeDif);
 	collisionSystem.clearFrame();
@@ -201,8 +216,9 @@ function drawFPS(context)
 	var d = new Date();
 	context.font = '20pt Calibri';
 	context.fillStyle = 'black';
-	
-	context.fillText("Date:"+d.toUTCString()+" - "+d.getMilliseconds(),xPos,yPos+ySeperation*0);
+
+	//context.fillText("Date:"+d.toUTCString()+" - "+d.getMilliseconds(),xPos,yPos+ySeperation*0);
+	context.fillText("FPS:"+lastIntervalFPS+" - "+framesThisInterval,xPos,yPos+ySeperation*0);
 	context.fillText("Mouse X:"+mousePos.X+" Y:"+mousePos.Y,           xPos,yPos+ySeperation*1);
 
 	context.fillText("Keys:"+keysPressed,           xPos,yPos+ySeperation*2);
