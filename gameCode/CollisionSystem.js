@@ -15,6 +15,27 @@ CollisionSystem.prototype.update=function(time)
 	for	(index = 0; index < this.FrameCollisionObjects.length; index++) 
 	{
 		//test collision
+		for	(index2 = index+1; index2 < this.FrameCollisionObjects.length; index2++) 
+		{
+			//test collision
+			var co1 = this.FrameCollisionObjects[index];
+			var co2 = this.FrameCollisionObjects[index2];
+
+			//var co1 = new CollisionRectangle(); var co2 = new CollisionRectangle();
+			//co1.Parent = new GameObject();
+			if(!co1.Parent.FixedLocation || !co2.Parent.FixedLocation)
+			{
+				//not both fixed so possible collision
+				if(CollisionSystem.testCollision(co1, co2))
+				{
+					playBeepData();
+					if(!co1.Parent.FixedLocation)
+						co1.Parent.moveToDelta(-co1.Parent.VectorX,-co1.Parent.VectorY);
+					if(!co2.Parent.FixedLocation)
+						co2.Parent.moveToDelta(-co2.Parent.VectorX,-co2.Parent.VectorY);
+				}
+			}
+		}
 	}
 };
 
@@ -54,12 +75,40 @@ CollisionSystem.prototype.toString=function()
 	return '[CollisionSystem]';
 };
 
+/* 
+ * @param GameObject co1 
+ * */
+CollisionSystem.testCollision=function(co1, co2)
+{
+	/*
+	var co1 = new CollisionRectangle();
+	var co2 = new CollisionRectangle();
+	*/
+	
+	//returns true if there is a collision
+	var collision = false;
+	var co1Xinco2 = ((co1.X > co2.X && co1.X < co2.Right) || (co1.Right > co2.X && co1.Right < co2.Right));
+	var co2Xinco1 = ((co2.X > co1.X && co2.X < co1.Right) || (co2.Right > co1.X && co2.Right < co1.Right));
+	var co1Yinco2 = ((co1.Y > co2.Y && co1.Y < co2.Bottom) || (co1.Bottom > co2.Y && co1.Bottom < co2.Bottom));
+	var co2Yinco1 = ((co2.Y > co1.Y && co2.Y < co1.Bottom) || (co2.Bottom > co1.Y && co2.Bottom < co1.Bottom));
+
+	var co1inco2 = (co1Xinco2 && co1Yinco2);
+	var co2inco1 = (co2Xinco1 && co2Yinco1);
+	
+	if(co1inco2 || co2inco1)
+	{
+		collision = true;
+	}
+	return collision;
+};
+
 
 //Collision Rectangle
 CollisionRectangle.prototype = new GameObject();        // Here's where the inheritance occurs 
 CollisionRectangle.prototype.constructor=CollisionSystem;  
 function CollisionRectangle(x,y,w,h, parent)
 {
+	this.Parent = parent;
 	this.X = x;
 	this.Y = y;
 	this.Width = w;

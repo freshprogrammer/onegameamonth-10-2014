@@ -4,7 +4,7 @@ Player.prototype = new GameObject();        // Here's where the inheritance occu
 Player.prototype.constructor=Player;  
 function Player()
 {
-	this.facingDir = new Point(0,0);
+	this.FacingDir = new Point(0,0);
 	this.Width = 32;
 	this.Height = 32;
 	this.Speed = 400;
@@ -38,17 +38,9 @@ Player.prototype.update=function(time)
 		collisionSystem.add(this.createCollisionObjectWithPadding(collisionpadding));
 };
 
-Player.prototype.move=function(dx, dy)
-{
-	this.X+=dx;
-	this.Y+=dy;
-	this.facingDir.X = dx;
-	this.facingDir.Y = dy;
-};
-
 Player.prototype.draw=function(context)
 {
-	var radRotation = Math.atan2(this.facingDir.Y, this.facingDir.X);
+	var radRotation = Math.atan2(this.FacingDir.Y, this.FacingDir.X);
 	radRotation += Math.PI/2;//rotate 90 to match original image
 
 	//context.fillText("rotation=:"+radRotation,10,190);

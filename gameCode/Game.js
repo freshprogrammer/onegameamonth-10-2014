@@ -7,7 +7,7 @@ var lastTickTime = 0;
 var gameWidth;
 var gameHeight;
 
-var fpsInterval = 2000;
+var fpsInterval = 1000;
 var framesThisInterval = 0;
 var lastIntervalFPS = -1;
 var lastIntervalEndTime = 0;
