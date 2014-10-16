@@ -29,6 +29,7 @@ CollisionSystem.prototype.update=function(time)
 				if(CollisionSystem.testCollision(co1, co2))
 				{
 					playBeepData();
+					//hack - just reverse movement for this frame
 					if(!co1.Parent.FixedLocation)
 						co1.Parent.moveToDelta(-co1.Parent.VectorX,-co1.Parent.VectorY);
 					if(!co2.Parent.FixedLocation)
@@ -108,6 +109,8 @@ CollisionSystem.testCollision=function(co1, co2)
 CollisionSystem.testCollisionAABB=function(co1, co2)
 {// axis aligned bounding box
 	//https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+	
+	//this does not catch skipping over 
 	
 	/*
 	var co1 = new CollisionRectangle();

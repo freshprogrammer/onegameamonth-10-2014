@@ -8,7 +8,7 @@ Level.prototype.create=function()
 {
 	var room = new Room(100,200,200,300);
 	this.Rooms.push(room);
-	var room = new Room(300,150,400,500);
+	var room = new Room(350,150,400,500);
 	this.Rooms.push(room);
 };
 
