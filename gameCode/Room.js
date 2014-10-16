@@ -12,7 +12,7 @@ function Room(x, y, w, h)
 
 Room.prototype.update=function(time)
 {
-	var singleDoorSize = 50;
+	var singleDoorSize = 75;
 	var wallThickness = 5;
 
 	var remainingWallWidth = (this.Width-singleDoorSize)/2;
