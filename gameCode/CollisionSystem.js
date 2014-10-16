@@ -75,9 +75,6 @@ CollisionSystem.prototype.toString=function()
 	return '[CollisionSystem]';
 };
 
-/* 
- * @param GameObject co1 
- * */
 CollisionSystem.testCollision=function(co1, co2)
 {
 	/*
@@ -85,6 +82,7 @@ CollisionSystem.testCollision=function(co1, co2)
 	var co2 = new CollisionRectangle();
 	*/
 	
+	/*
 	//returns true if there is a collision
 	var collision = false;
 	var co1Xinco2 = ((co1.X > co2.X && co1.X < co2.Right) || (co1.Right > co2.X && co1.Right < co2.Right));
@@ -98,7 +96,30 @@ CollisionSystem.testCollision=function(co1, co2)
 	if(co1inco2 || co2inco1)
 	{
 		collision = true;
+	}*/
+	
+	if(co1 instanceof CollisionRectangle && co2 instanceof CollisionRectangle)
+	{
+		collision = CollisionSystem.testCollisionAABB(co1,co2); 
 	}
+	return collision;
+};
+
+CollisionSystem.testCollisionAABB=function(co1, co2)
+{// axis aligned bounding box
+	//https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+	
+	/*
+	var co1 = new CollisionRectangle();
+	var co2 = new CollisionRectangle();
+	*/
+	
+	//returns true if there is a collision
+	var collision = co1.X < co2.Right && 
+					co1.Right > co2.X &&
+					co2.Y < co1.Bottom && 
+					co2.Bottom > co1.Y;
+					
 	return collision;
 };
 
