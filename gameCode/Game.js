@@ -7,7 +7,7 @@ var lastTickTime = 0;
 var gameWidth;
 var gameHeight;
 
-var fpsInterval = 2000;
+var fpsInterval = 1000;
 var framesThisInterval = 0;
 var lastIntervalFPS = -1;
 var lastIntervalEndTime = 0;
@@ -19,7 +19,7 @@ var gameInput = new GameInput();
 
 var player;
 var level;
-var collisionSystemRendered = false;
+var collisionSystemRendered = true;
 var collisionSystem;
 
 var demoX = 1;
@@ -126,8 +126,8 @@ function gameStart()
 	
 	//game objects
 	player = new Player();
-	player.X = 200;
-	player.Y = 500;
+	player.X = 100;
+	player.Y = 100;
 	
 	lastTickTime = window.performance.now();
 	tick();
