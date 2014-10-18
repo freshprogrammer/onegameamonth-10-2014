@@ -17,6 +17,9 @@ var oneTimeKeys = [48];
 var oneTimeKeysActive = [];
 var gameInput = new GameInput();
 
+var roomUnitSize = 250;
+var roomDoorSize = 75;
+
 var player;
 var level;
 var collisionSystemRendered = true;

@@ -30,6 +30,25 @@ Level.prototype.draw=function(context)
 	}
 };
 
+Level.prototype.createRoom=function()
+{
+	var maxX = 4;
+	var maxY = 4;
+	
+	var roomXSize = Math.floor(Math.random()*maxX) + 1;
+	var roomYSize = Math.floor(Math.random()*maxX) + 1;
+	var totalRoomSize = roomXSize * roomYSize;
+	
+	var roomUnits = [];
+	
+	for(var xx=0; xx< totalRoomSize; xx++)
+	{
+		roomUnits.push(null);
+	}
+	
+	
+};
+
 Level.prototype.toString=function()
 {
 	return '[Level]';

@@ -6,14 +6,17 @@ function Room(x, y, w, h)
 	this.Y = y;
 	this.Width = w;
 	this.Height = h;
+	this.UnitWidth;
 
+	this.units = [];
+	
 	this.collisionEnabled = true;
 }
 
 Room.prototype.update=function(time)
 {
-	var singleDoorSize = 75;
-	var wallThickness = 5;
+	var singleDoorSize = roomDoorSize;
+	var wallThickness = 3;
 
 	var remainingWallWidth = (this.Width-singleDoorSize)/2;
 	var remainingWallHeight = (this.Height-singleDoorSize)/2;
@@ -54,3 +57,21 @@ Room.prototype.toString=function()
 {
 	return '[Room ('+this.X+','+this.Y+','+this.Width+','+this.Height+')]';
 };
+
+
+Room.WallTypes = {
+		None: 0,
+		Wall: 1,
+		Door: 2,
+		LockedDoor: 3,
+	};
+
+
+RoomUnit.prototype.constructor=RoomUnit;  
+function RoomUnit(n, e, s, w)
+{
+	this.Up = n;
+	this.Right = e;
+	this.Down = s;
+	this.Left = w; 
+}
